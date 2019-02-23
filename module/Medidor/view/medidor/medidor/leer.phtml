@@ -1,0 +1,55 @@
+<?php
+$title = 'Agregar Lectura';
+$this->headTitle($title);
+?>
+<h1><?= $this->escapeHtml($title) ?></h1>
+<?php
+// This provides a default CSS class and placeholder text for the title element:
+$medicion = $form->get('medicion');
+$medicion->setAttribute('class', 'form-control');
+$medicion->setAttribute('placeholder', 'Lectura');
+
+// This provides a default CSS class and placeholder text for the artist element:
+$fecha = $form->get('fecha');
+$fecha->setAttribute('class', 'form-control');
+$fecha->setAttribute('placeholder', 'yyyy-mm-dd hh:mm:ss');
+
+// This provides CSS classes for the submit button:
+$submit = $form->get('submit');
+$submit->setAttribute('class', 'btn btn-primary');
+
+$medidorf = $form->get('medidor');
+$medidorf->setValue($medidor->getId());
+
+$form->setAttribute('action', $this->url('medidor', ['action' => 'leer']));
+$form->prepare();
+?>
+<p><b>No. Servicio</b></p>
+<p><?= $medidor->getNumeroServicio() ?></p>
+<p><b>Titular</b></p>
+<p><?= $medidor->getTitular() ?></p>
+
+<?php
+echo $this->form()->openTag($form);
+?>
+<?php // Wrap the elements in divs marked as form groups, and render the
+      // label, element, and errors separately within ?>
+<div class="form-group">
+    <?= $this->formLabel($medicion) ?>
+    <?= $this->formElement($medicion) ?>
+    <?= $this->formElementErrors()->render($medicion, ['class' => 'help-block']) ?>
+</div>
+
+<div class="form-group">
+    <?= $this->formLabel($fecha) ?>
+    <?= $this->formElement($fecha) ?>
+    <?= $this->formElementErrors()->render($fecha, ['class' => 'help-block']) ?>
+</div>
+
+
+<?php
+echo $this->formSubmit($submit);
+echo $this->formHidden($form->get('id'));
+echo $this->formHidden($medidorf);
+echo $this->form()->closeTag();
+

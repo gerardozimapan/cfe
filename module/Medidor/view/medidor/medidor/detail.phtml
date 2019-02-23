@@ -1,0 +1,72 @@
+<?php
+$title = "Detalle del Medidor";
+$this->headTitle($title);
+$this->plugin("dateFormat")->setTimezone("America/Mexico_City")->setLocale("es_MX");
+$this->plugin('currencyformat')->setCurrencyCode('MXN')->setLocale('es_MX');
+?>
+
+<div class="row">
+    <div class="col-md-6">
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>No. Servicio</th>
+                <td><?= $this->escapeHtml($medidor->getNumeroServicio()) ?></td>
+            </tr>
+            <tr>
+                <th>Titular</th>
+                <td><?= $this->escapeHtml($medidor->getTitular()) ?></td>
+            </tr>
+            <tr>
+                <th>Tarifa</th>
+                <td><?= $this->escapeHtml($medidor->getTarifa()) ?></td>
+            </tr>
+            <tr>
+                <th>Última Lectura</th>
+                <td><?= $this->escapeHtml($medidor->getUltimaLectura()) ?></td>
+            </tr>
+            <tr>
+                <th>Fecha Última Lectura</th>
+                <td><?= $this->escapeHtml($medidor->getFechaUltimaLectura()->format('d/m/Y')) ?></td>
+            </tr>
+            <tr>
+                <th>Consumo Acumulado</th>
+                <td><?= $this->escapeHtml($medidor->getConsumoActual()) ?>&nbsp;KW</td>
+            </tr>
+            <tr>
+                <th>Costo Actual</th>
+                <td><?= $this->currencyFormat($medidor->getCostoActual()) ?></td>
+            </tr>
+            <tr>
+                <th>Costo Bimestral</th>
+                <td><?= $this->currencyFormat($medidor->getCostoProyectado()) ?></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<p>
+    <a class="btn btn-primary" href="<?= $this->url('recibo', ['action' => 'add', 'id' => $medidor->getId()]) ?>"><span class="glyphicon glyphicon-plus"></span>&nbsp;Agregar Recibo</a>
+</p>
+
+<div class="row">
+    <div class="col-md-10">
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>Bimestre</th>
+                <th>Periodo</th>
+                <th>Consumo</th>
+                <th>Importe</th>
+            </tr>
+            <?php foreach ($recibos = $medidor->getRecibos() as $recibo) : ?>
+            <tr>
+                <td><?= $this->escapeHtml($recibo->getBimestre()) ?></td>
+                <td><?= $this->dateFormat($recibo->getPeriodoDesde(), IntlDateFormatter::SHORT) . " - " . $this->dateFormat($recibo->getPeriodoHasta(), IntlDateFormatter::SHORT) ?></td>
+                <td><?= $this->escapeHtml($recibo->getLecturaActual() - $recibo->getLecturaAnterior()) ?>&nbsp;KW</td>
+                <td><?= $this->currencyFormat($recibo->getImporte()) ?></td>
+            </tr>
+
+
+            <?php endforeach; ?>
+        </table>
+    </div>
+</div>

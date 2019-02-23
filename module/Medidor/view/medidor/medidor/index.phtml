@@ -1,0 +1,42 @@
+<?php
+
+
+$title = 'Mis Medidores';
+$this->headTitle($title);
+$this->plugin("dateFormat")->setTimezone("America/Mexico_City")->setLocale("es_MX");
+$this->plugin('currencyformat')->setCurrencyCode('MXN')->setLocale('es_MX');
+
+?>
+<h1><?= $this->escapeHtml($title) ?></h1>
+<p>
+    <a class="btn btn-primary" href="<?= $this->url('medidor', ['action' => 'add']) ?>"><span class="glyphicon glyphicon-plus"></span>&nbsp;Nuevo</a>
+</p>
+
+<table class="table">
+<tr>
+    <th>No. Servicio</th>
+    <th>Titular</th>
+    <th>Última Lectura</th>
+    <th>Fecha de Lectura</th>
+    <th>Consumo Actual</th>
+    <th>Costo Actual</th>
+    <th>Costo Bimestral</th>
+    <th>&nbsp;</th>
+</tr>
+<?php foreach ($medidores as $medidor) : ?>
+    <tr>
+        <td><?= $this->escapeHtml($medidor->getNumeroServicio()) ?></td>
+        <td><?= $this->escapeHtml($medidor->getTitular()) ?></td>
+        <td><?= $this->escapeHtml($medidor->getUltimaLectura()) ?></td>
+        <td><?= $this->dateFormat($medidor->getFechaUltimaLectura(), IntlDateFormatter::SHORT) ?></td>
+        <td><?= $this->escapeHtml($medidor->getConsumoActual()) ?>&nbsp;KW</td>
+        <td><?= $this->currencyFormat($medidor->getCostoActual()) ?></td>
+        <td><?= $this->currencyFormat($medidor->getCostoProyectado()) ?></td>
+        <td>
+            <a class="btn btn-danger" href="<?= $this->url('medidor', ['action' => 'leer', 'id' => $medidor->getId()]) ?>">
+                <span class="glyphicon glyphicon-scale"></span>&nbsp;Lectura</a>
+            <a class="btn btn-info" href="<?= $this->url('medidor', ['action' => 'detail', 'id' => $medidor->getId()]) ?>"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Detalles</a>
+        </td>
+    </tr>
+<?php endforeach; ?>
+</table>

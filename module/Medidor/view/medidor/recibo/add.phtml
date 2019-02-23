@@ -1,0 +1,86 @@
+<?php
+$title = 'Agregar Recibo';
+$this->headTitle($title);
+?>
+<h1><?= $this->escapeHtml($title) ?></h1>
+
+<?php
+$form->get('bimestre')->setAttributes([
+    'class' => 'form-control',
+    'placeholder' => 'Dic2018'
+]);
+
+$form->get('periodoDesde')->setAttributes([
+    'class' => 'form-control',
+    'placeholder' => '13/10/2018'
+]);
+
+$form->get('periodoHasta')->setAttributes([
+    'class' => 'form-control',
+    'placeholder' => '13/12/2018'
+]);
+
+$form->get('lecturaAnterior')->setAttributes([
+    'class' => 'form-control',
+    'placeholder' => '0123'
+]);
+
+$form->get('lecturaActual')->setAttributes([
+    'class' => 'form-control',
+    'placeholder' => '0234'
+]);
+
+$form->get('importe')->setAttributes([
+    'class' => 'form-control',
+    'placeholder' => '150.00'
+]);
+
+$form->prepare();
+?>
+
+<div class="row">
+    <div class="col-md-6">
+<?= $this->form()->openTag($form) ?>
+
+<div class="form-group">
+    <?= $this->formLabel($form->get('bimestre')) ?>
+    <?= $this->formElement($form->get('bimestre')) ?>
+    <?= $this->formElementErrors($form->get('bimestre')) ?>
+</div>
+
+<div class="form-group">
+    <?= $this->formLabel($form->get('periodoDesde')) ?>
+    <?= $this->formElement($form->get('periodoDesde')) ?>
+    <?= $this->formElementErrors($form->get('periodoDesde')) ?>
+</div>
+
+<div class="form-group">
+    <?= $this->formLabel($form->get('periodoHasta')) ?>
+    <?= $this->formElement($form->get('periodoHasta')) ?>
+    <?= $this->formElementErrors($form->get('periodoHasta')) ?>
+</div>
+
+<div class="form-group">
+    <?= $this->formLabel($form->get('lecturaAnterior')) ?>
+    <?= $this->formElement($form->get('lecturaAnterior')) ?>
+    <?= $this->formElementErrors($form->get('lecturaAnterior')) ?>
+</div>
+
+<div class="form-group">
+    <?= $this->formLabel($form->get('lecturaActual')) ?>
+    <?= $this->formElement($form->get('lecturaActual')) ?>
+    <?= $this->formElementErrors($form->get('lecturaActual')) ?>
+</div>
+
+<div class="form-group">
+    <?= $this->formLabel($form->get('importe')) ?>
+    <?= $this->formElement($form->get('importe')) ?>
+    <?= $this->formElementErrors($form->get('importe')) ?>
+</div>
+
+<?= $this->formElement($form->get('submit')) ?>
+<?= $this->formHidden($form->get('id')) ?>
+<?= $this->formHidden($form->get('medidor_id')) ?>
+<?= $this->form()->closeTag() ?>
+</div>
+</div>
