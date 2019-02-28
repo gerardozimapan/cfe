@@ -19,7 +19,7 @@ class Recibo
      *  @ORM\JoinColumn(name="medidor_id", referencedColumnName="id")
      */
     private $medidor;
-    /** @ORM\Column(length=7) */
+    /** @ORM\Column(type="date") */
     private $bimestre;
     /** @ORM\Column(type="datetime", name="periodo_desde") */
     private $periodoDesde;

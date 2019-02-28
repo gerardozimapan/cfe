@@ -5,9 +5,12 @@ $this->headTitle($title);
 <h1><?= $this->escapeHtml($title) ?></h1>
 
 <?php
-$form->get('bimestre')->setAttributes([
+$form->get('bimestre_month')->setAttributes([
     'class' => 'form-control',
-    'placeholder' => 'Dic2018'
+]);
+
+$form->get('bimestre_year')->setAttributes([
+    'class' => 'form-control',
 ]);
 
 $form->get('periodoDesde')->setAttributes([
@@ -43,9 +46,17 @@ $form->prepare();
 <?= $this->form()->openTag($form) ?>
 
 <div class="form-group">
-    <?= $this->formLabel($form->get('bimestre')) ?>
-    <?= $this->formElement($form->get('bimestre')) ?>
-    <?= $this->formElementErrors($form->get('bimestre')) ?>
+    <label for="bimestre_month">Bimestre</label>
+    <div class="row">
+        <div class="col-md-6">
+            <?= $this->formElement($form->get('bimestre_month')) ?>
+            <?= $this->formElementErrors($form->get('bimestre_month')) ?>
+        </div>
+        <div class="col-md-6">
+            <?= $this->formElement($form->get('bimestre_year')) ?>
+            <?= $this->formElementErrors($form->get('bimestre_year')) ?>
+        </div>
+    </div>
 </div>
 
 <div class="form-group">

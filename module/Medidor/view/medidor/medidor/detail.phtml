@@ -3,6 +3,7 @@ $title = "Detalle del Medidor";
 $this->headTitle($title);
 $this->plugin("dateFormat")->setTimezone("America/Mexico_City")->setLocale("es_MX");
 $this->plugin('currencyformat')->setCurrencyCode('MXN')->setLocale('es_MX');
+setlocale(LC_TIME, "es_MX");
 ?>
 
 <div class="row">
@@ -59,7 +60,7 @@ $this->plugin('currencyformat')->setCurrencyCode('MXN')->setLocale('es_MX');
             </tr>
             <?php foreach ($recibos = $medidor->getRecibos() as $recibo) : ?>
             <tr>
-                <td><?= $this->escapeHtml($recibo->getBimestre()) ?></td>
+                <td><?= $this->escapeHtml($recibo->getBimestre()->format('MY')) ?></td>
                 <td><?= $this->dateFormat($recibo->getPeriodoDesde(), IntlDateFormatter::SHORT) . " - " . $this->dateFormat($recibo->getPeriodoHasta(), IntlDateFormatter::SHORT) ?></td>
                 <td><?= $this->escapeHtml($recibo->getLecturaActual() - $recibo->getLecturaAnterior()) ?>&nbsp;KW</td>
                 <td><?= $this->currencyFormat($recibo->getImporte()) ?></td>

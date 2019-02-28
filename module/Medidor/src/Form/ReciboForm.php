@@ -28,10 +28,32 @@ class ReciboForm extends Form
         ]);
 
         $this->add([
-            'name' => 'bimestre',
-            'type' => 'text',
+            'name' => 'bimestre_month',
+            'type' => 'select',
             'options' => [
-                'label' => 'Bimestre',
+                'label' => 'Mes',
+                'value_options' => [
+                    1 => 'Enero',
+                    2 => 'Febrero',
+                    3 => 'Marzo',
+                    4 => 'Abril',
+                    5 => 'Mayo',
+                    6 => 'Junio',
+                    7 => 'Julio',
+                    8 => 'Agosto',
+                    9 => 'Septiembre',
+                    10 => 'Octubre',
+                    11 => 'Noviembre',
+                    12 => 'Diciembre',
+                ],
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'bimestre_year',
+            'type' => 'select',
+            'options' => [
+                'label' => 'Año',
             ],
         ]);
 
@@ -98,7 +120,7 @@ class ReciboForm extends Form
 
         // Add input for "medidor" field
         $inputFilter->add([
-            'name' => 'medidor',
+            'name' => 'medidor_id',
             'required' => true,
             'filters'  => [
                 ['name' => 'ToInt'],
@@ -113,17 +135,17 @@ class ReciboForm extends Form
 
         // Add input for "bimestre" field.
         $inputFilter->add([
-            'name'     => 'bimestre',
+            'name'     => 'bimestre_month',
             'required' => true,
             'filters'  => [
-                ['name' => 'StringTrim'],
+                ['name' => 'ToInt'],
             ],
             'validators' => [
                 [
-                    'name'    => 'StringLength',
+                    'name'    => 'GreaterThan',
                     'options' => [
                         'min' => 1,
-                        'max' => 7,
+                        'max' => 12,
                     ],
                 ],
             ],

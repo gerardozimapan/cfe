@@ -41,6 +41,12 @@ class ReciboController extends AbstractActionController
         $form = new ReciboForm();
         $form->get('submit')->setValue('Add');
         $form->get('medidor_id')->setValue($medidorId);
+        $optionsBimestreYear = [
+            date('Y') - 1 => date('Y') - 1,
+            date('Y') => date('Y'),
+            date('Y') + 1 => date('Y') + 1,
+        ];
+        $form->get('bimestre_year')->setValueOptions($optionsBimestreYear);
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -48,6 +54,7 @@ class ReciboController extends AbstractActionController
 
             if ($form->isValid()) {
                 $data = $form->getData();
+
                 // Get medidor by id.
                 $medidor = $this->entityManager->getRepository(Medidor::class)
                     ->find((int)$data['medidor_id']);
@@ -62,7 +69,7 @@ class ReciboController extends AbstractActionController
 
                 $recibo = new Recibo();
                 $recibo->setMedidor($medidor);
-                $recibo->setBimestre($data['bimestre']);
+                $recibo->setBimestre(date('Y-m-d', mktime(0, 0, 0, $data['bimestre_month'], 1, $data['bimestre_year'])));
                 $recibo->setPeriodoDesde(new \DateTime($data['periodoDesde']));
                 $recibo->setPeriodoHasta(new \DateTime($data['periodoHasta']));
                 $recibo->setLecturaAnterior($data['lecturaAnterior']);
@@ -73,6 +80,9 @@ class ReciboController extends AbstractActionController
 
                 // Redirect to medidor detail.
                 return $this->redirect()->toRoute('medidor', ['action' => 'detail', 'id' =>$data['medidor_id']]);
+            } else {
+                $msg = $form->getMessages();
+                var_dump($msg); exit;
             }
         }
         return array('form' => $form);
