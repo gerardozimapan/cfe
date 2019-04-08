@@ -69,7 +69,7 @@ class ReciboController extends AbstractActionController
 
                 $recibo = new Recibo();
                 $recibo->setMedidor($medidor);
-                $recibo->setBimestre(date('Y-m-d', mktime(0, 0, 0, $data['bimestre_month'], 1, $data['bimestre_year'])));
+                $recibo->setBimestre(new \DateTime(date('Y-m-d', mktime(0, 0, 0, $data['bimestre_month'], 1, $data['bimestre_year']))));
                 $recibo->setPeriodoDesde(new \DateTime($data['periodoDesde']));
                 $recibo->setPeriodoHasta(new \DateTime($data['periodoHasta']));
                 $recibo->setLecturaAnterior($data['lecturaAnterior']);

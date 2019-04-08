@@ -42,6 +42,7 @@ $RECYCLE.BIN/
 ### ZendFramework ###
 # Composer files
 composer.phar
+composer.lock
 vendor/
 
 # Local configs
